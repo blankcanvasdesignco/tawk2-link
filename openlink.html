@@ -9,6 +9,8 @@
         var userAgent = navigator.userAgent.toLowerCase();
         var isAndroid = userAgent.indexOf("android") > -1;
         var isIOS = /iphone|ipad|ipod/.test(userAgent);
+        var isWindows = userAgent.indexOf("win") > -1;
+        var isMac = userAgent.indexOf("mac") > -1;
 
         var deepLink = "myapp://homescreen"; // Your app's deep link
         var playStore =
@@ -18,13 +20,16 @@
         // Try opening the app
         window.location.href = deepLink;
 
-        // If the app is not installed, redirect to store after a delay
+        // If the app is not installed, redirect to the appropriate store
         setTimeout(function () {
           if (document.hidden || document.visibilityState === "hidden") return;
-          if (isAndroid) {
-            window.location.href = playStore;
-          } else if (isIOS) {
+
+          if (isIOS || isMac) {
+            // iOS & Mac → Redirect to App Store
             window.location.href = appStore;
+          } else if (isAndroid || isWindows) {
+            // Android & Windows → Redirect to Play Store
+            window.location.href = playStore;
           }
         }, 1500);
       }
@@ -34,3 +39,4 @@
     <p>Redirecting...</p>
   </body>
 </html>
+
