@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Open My App</title>
+    <script>
+      function openApp() {
+        var userAgent = navigator.userAgent.toLowerCase();
+        var isAndroid = userAgent.indexOf("android") > -1;
+        var isIOS = /iphone|ipad|ipod/.test(userAgent);
+
+        var deepLink = "myapp://home"; // Your app's deep link
+        var playStore =
+          "https://play.google.com/store/apps/details?id=com.blankcanvas.tawk2";
+        var appStore = "https://apps.apple.com/app/id6738306118";
+
+        // Try opening the app
+        window.location.href = deepLink;
+
+        // If the app is not installed, redirect to store after a delay
+        setTimeout(function () {
+          if (document.hidden || document.visibilityState === "hidden") return;
+          if (isAndroid) {
+            window.location.href = playStore;
+          } else if (isIOS) {
+            window.location.href = appStore;
+          }
+        }, 1500);
+      }
+    </script>
+  </head>
+  <body onload="openApp()">
+    <p>Redirecting...</p>
+  </body>
+</html>
